@@ -3,6 +3,8 @@ dansguardian
 
 Container for DansGuardian, a web content filter.
 
+This container is intended to be used as a base image. The configuration is stock. /etc/dansguardian configuration should be set. A sample blacklist config for shallalist is in /blacklists/bannedsitelist, /blacklists/bannedurllist.
+
 Features:
  - dansguardian + squid + blacklist update from shallalist.de
  - See Copyright at http://www.shallalist.de for use of this container
@@ -12,4 +14,5 @@ Features:
  - Volume /log for holding log files
  - Volume /cache for holding the squid cache
  - Volume /blacklists for persisting black list updates across re-creating of the container
+
 
