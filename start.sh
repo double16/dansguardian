@@ -17,5 +17,5 @@ chown -R dansguardian:dansguardian /log/dansguardian /cache/dansguardian
 
 cron
 
-tail -F /log/squid3/access.log /log/dansguardian/access.log
+tail -q -F /log/squid3/access.log /log/dansguardian/access.log
 
