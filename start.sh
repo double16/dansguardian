@@ -3,10 +3,9 @@
 # Clear files from previous dirty exit
 rm -f /var/run/dansguardian.pid /var/run/squid3.pid
 
-if [ -n "${SERVERNAME}" ]; then
-	sed -i "s/YOURSERVER.YOURDOMAIN/${SERVERNAME}:8125/" /etc/dansguardian/dansguardian.conf
-	echo "ServerName ${SERVERNAME}" >> /etc/apache2/apache2.conf
-fi
+[ -n "${SERVERNAME}" ] || SERVERNAME="$(hostname)"
+sed -i "s/YOURSERVER.YOURDOMAIN/${SERVERNAME}:8125/" /etc/dansguardian/dansguardian.conf
+echo "ServerName ${SERVERNAME}" >> /etc/apache2/apache2.conf
 
 # Update the blacklists, which may not be populated if the /blacklists volume is mounted as a data container.
 # If the downloaded tar ball is recent, then this won't download it again.
