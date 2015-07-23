@@ -11,8 +11,9 @@ Features:
  - Port 3128 is the content filtered proxy port
  - Port 8123 is the caching only proxy port
  - Port 8124 is the transparent caching only proxy port
+ - Port 8125 is a web server hosting the "access denied" page
  - Volume /log for holding log files
  - Volume /cache for holding the squid cache
  - Volume /blacklists for persisting black list updates across re-creating of the container
-
+ - Enviroment SERVERNAME for the name or IP of the proxy server
 
