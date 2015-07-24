@@ -1,1 +1,1 @@
-nc -z -w ${TIMEOUT} ${TARGET} 8124
+nc -z -w ${TIMEOUT} ${TARGET} ${PORT_INTERCEPT}

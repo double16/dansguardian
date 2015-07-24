@@ -1,7 +1,10 @@
 #!/bin/bash
 
-export TIMEOUT=15
 CONPREFIX=dansguardian_autotest
+COMPOSE="docker-compose -p ${CONPREFIX} -f test.yml"
+
+export TIMEOUT=15
+export CURL_OPTS="--retry 3 --connect-timeout ${TIMEOUT} -#"
 
 TARGET=
 if [ -n "${DOCKER_HOST}" ]; then
@@ -18,8 +21,15 @@ fi
 echo "Testing docker instance at ${TARGET}"
 export TARGET
 
-docker-compose -p ${CONPREFIX} -f test.yml build || exit 1
-docker-compose -p ${CONPREFIX} -f test.yml up -d || exit 1
+${COMPOSE} build || exit 1
+${COMPOSE} up -d || exit 1
+
+export PORT_FILTERED=$(${COMPOSE} port --protocol=tcp proxy 3128 2>/dev/null | cut -d : -f 2)
+export PORT_CACHED=$(${COMPOSE} port --protocol=tcp proxy 8123 2>/dev/null | cut -d : -f 2)
+export PORT_INTERCEPT=$(${COMPOSE} port --protocol=tcp proxy 8124 2>/dev/null | cut -d : -f 2)
+export PORT_ACCESSDENIED=$(${COMPOSE} port --protocol=tcp proxy 8125 2>/dev/null | cut -d : -f 2)
+
+sleep 3s
 
 OUTPUT=$(mktemp ${TMPDIR:-/tmp/}testoutXXXXXXXXXX)
 RESULT=0
@@ -37,8 +47,8 @@ for TEST in $(find tests -maxdepth 1 -type f); do
 done
 rm ${OUTPUT}
 
-docker-compose -p ${CONPREFIX} -f test.yml stop
-docker-compose -p ${CONPREFIX} -f test.yml rm -f -v
+${COMPOSE} stop
+${COMPOSE} rm -f -v
 
 if [ $RESULT -eq 0 ]; then
 	echo "PASS"

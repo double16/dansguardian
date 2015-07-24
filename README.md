@@ -15,5 +15,5 @@ Features:
  - Volume /log for holding log files
  - Volume /cache for holding the squid cache
  - Volume /blacklists for persisting black list updates across re-creating of the container
- - Enviroment SERVERNAME for the name or IP of the proxy server
+ - Enviroment SERVERNAME for the name or IP of the proxy server, by default uses the value of 'hostname' in the container
 

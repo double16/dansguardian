@@ -1,1 +1,1 @@
-curl -# --proxy http://${TARGET}:8123 http://www.google.com/ | grep -qi "Google Search" >/dev/null
+curl ${CURL_OPTS} --proxy http://${TARGET}:${PORT_CACHED} http://www.google.com/ | grep -qi "Google Search" >/dev/null
