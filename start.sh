@@ -13,13 +13,13 @@ echo "ServerName ${SERVERNAME}" >> /etc/apache2/apache2.conf
 
 mkdir -p /log/squid3
 mkdir -p /cache/squid3
-chown -R proxy /log/squid3 /cache/squid3
+find /log/squid3 /cache/squid3 -not -user proxy -exec chown proxy {} +
 /usr/sbin/squid3 -z -f /etc/squid3/squid.conf
 /usr/sbin/squid3 -N -YC -f /etc/squid3/squid.conf &
 
 mkdir -p /log/dansguardian
 mkdir -p /cache/dansguardian
-chown -R dansguardian:dansguardian /log/dansguardian /cache/dansguardian
+find /log/dansguardian /cache/dansguardian -not \( -user dansguardian -a -group dansguardian \) -exec chown dansguardian:dansguardian {} +
 /usr/sbin/dansguardian &
 
 /etc/init.d/apache2 start
