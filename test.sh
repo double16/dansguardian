@@ -31,7 +31,7 @@ export PORT_ACCESSDENIED=$(${COMPOSE} port --protocol=tcp proxy 8125 2>/dev/null
 
 sleep 3s
 
-OUTPUT=$(mktemp ${TMPDIR:-/tmp/}testoutXXXXXXXXXX)
+OUTPUT=$(mktemp -t testoutXXXXXXXXXX)
 RESULT=0
 for TEST in $(find tests -maxdepth 1 -type f); do
 	echo -n "${TEST} ... "
