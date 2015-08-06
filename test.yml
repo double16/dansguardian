@@ -1,5 +1,7 @@
 proxy:
   build: .
+  environment:
+    - TEST=true
   ports:
     - "3128"
     - "8123"
