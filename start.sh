@@ -15,12 +15,12 @@ mkdir -p /log/squid3
 mkdir -p /cache/squid3
 find /log/squid3 /cache/squid3 -not -user proxy -exec chown proxy {} +
 /usr/sbin/squid3 -z -f /etc/squid3/squid.conf
-/usr/sbin/squid3 -N -YC -f /etc/squid3/squid.conf &
+/usr/sbin/squid3 -YC -f /etc/squid3/squid.conf
 
 mkdir -p /log/dansguardian
 mkdir -p /cache/dansguardian
 find /log/dansguardian /cache/dansguardian -not \( -user dansguardian -a -group dansguardian \) -exec chown dansguardian:dansguardian {} +
-/usr/sbin/dansguardian &
+/usr/sbin/dansguardian
 
 /etc/init.d/apache2 start
 
@@ -28,8 +28,8 @@ cron
 
 tail -q -F /log/squid3/access.log /log/dansguardian/access.log
 
-/etc/init.d/apache2 stop
-killall dansguardian
-killall squid3
+squid3 -k shutdown
+dansguardian -q
 killall cron
+/etc/init.d/apache2 stop
 
