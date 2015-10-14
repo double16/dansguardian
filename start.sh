@@ -12,6 +12,7 @@ echo "ServerName ${SERVERNAME}" >> /etc/apache2/apache2.conf
 /blacklist-update.sh
 
 mkdir -p /log/squid3
+mkdir -p /log/sarg
 mkdir -p /cache/squid3
 find /log/squid3 /cache/squid3 -not -user proxy -exec chown proxy {} +
 /usr/sbin/squid3 -z -f /etc/squid3/squid.conf
