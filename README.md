@@ -12,6 +12,7 @@ Features:
  - Port 8123 is the caching only proxy port
  - Port 8124 is the transparent caching only proxy port
  - Port 8125 is a web server hosting the "access denied" page
+ - :8125/reports holds daily web usage reports stored at /log/sarg
  - Volume /log for holding log files
  - Volume /cache for holding the squid cache
  - Volume /blacklists for persisting black list updates across re-creating of the container
