@@ -3,7 +3,9 @@ dansguardian
 
 Container for DansGuardian, a web content filter.
 
-This container is intended to be used as a base image. The configuration is stock. /etc/dansguardian configuration should be set. A sample blacklist config for shallalist is in /blacklists/bannedsitelist, /blacklists/bannedurllist.
+This container is intended to be used as a base image. The configuration is stock from the Ubuntu packages. /etc/dansguardian/* needs to be configured for your use case. This container configuration uses all of the blacklists from shallalist.de, which makes it very restrictive. You might try http://www.myip.com for a site that is not blocked.
+
+A sample blacklist config for shallalist is in /blacklists/bannedsitelist, /blacklists/bannedurllist. These files are not referenced by the dansguardian config. They are provided to show the total available blacklists provided by shallalist.de and are updated each time the blacklist is downloaded via cron.
 
 Features:
  - dansguardian + squid + blacklist update from shallalist.de
@@ -11,8 +13,7 @@ Features:
  - Port 3128 is the content filtered proxy port
  - Port 8123 is the caching only proxy port
  - Port 8124 is the transparent caching only proxy port
- - Port 8125 is a web server hosting the "access denied" page
- - :8125/reports holds daily web usage reports stored at /log/sarg
+ - http://*:8125/reports holds web usage reports stored at /log/sarg
  - Volume /log for holding log files
  - Volume /cache for holding the squid cache
  - Volume /blacklists for persisting black list updates across re-creating of the container

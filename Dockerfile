@@ -37,7 +37,7 @@ VOLUME /log
 # 3128 is the content filtered proxy port
 # 8123 is the caching only proxy port
 # 8124 is the transparent caching only proxy port
-# 8125 is the apache2 port serving the access denied page
+# 8125 is the apache2 port serving the usage reports
 EXPOSE 3128 8123 8124 8125
 
 CMD ["/start.sh"]
