@@ -1,4 +1,4 @@
-FROM ubuntu:14.04.3
+FROM debian:sid
 MAINTAINER Patrick Double <pat@patdouble.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -6,7 +6,7 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL C.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
-RUN apt-get -q update &&\
+RUN rm -rf /var/lib/apt/lists/* && apt-get -q update &&\
   apt-get -qy --force-yes dist-upgrade &&\
   apt-get install -qy --force-yes squid dansguardian apache2 sarg wget cron psmisc &&\
   apt-get clean &&\
@@ -18,7 +18,7 @@ ADD blacklist/blacklist-update.sh /blacklist-update.sh
 RUN chmod u+x /blacklist-update.sh && ln -s /blacklist-update.sh /etc/cron.weekly/blacklist-update.sh && /bin/sh -x /blacklist-update.sh && cp /blacklists/banned*list /etc/dansguardian/lists/
 
 # squid config
-COPY squid/* /etc/squid3/
+COPY squid/* /etc/squid/
 # sarg (squid access reports) config
 RUN sed -i -e 's/output_dir .*/output_dir \/log\/sarg/' -e 's/access_log .*/access_log \/log\/squid3\/access.log/' -e 's/^resolve_ip.*/resolve_ip yes/' /etc/sarg/sarg.conf && sed -i -e 's/HTMLOUT=.*/HTMLOUT=\/log\/sarg/' /etc/sarg/sarg-reports.conf && ln -sf /log/sarg /var/www/html/reports
 # dansguardian config

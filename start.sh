@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Clear files from previous dirty exit
-rm -f /var/run/dansguardian.pid /var/run/squid3.pid
+rm -f /var/run/dansguardian.pid /var/run/squid.pid
 
 [ -n "${SERVERNAME}" ] || SERVERNAME="$(hostname)"
 sed -i "s/YOURSERVER.YOURDOMAIN/${SERVERNAME}:8125/" /etc/dansguardian/dansguardian.conf
@@ -15,8 +15,8 @@ mkdir -p /log/squid3
 mkdir -p /log/sarg
 mkdir -p /cache/squid3
 find /log/squid3 /cache/squid3 -not -user proxy -exec chown proxy {} +
-/usr/sbin/squid3 -z -f /etc/squid3/squid.conf
-/usr/sbin/squid3 -YC -f /etc/squid3/squid.conf
+/usr/sbin/squid -z -f /etc/squid/squid.conf
+/usr/sbin/squid -YC -f /etc/squid/squid.conf
 
 mkdir -p /log/dansguardian
 mkdir -p /cache/dansguardian
@@ -29,7 +29,7 @@ cron
 
 tail -q -F /log/squid3/access.log /log/dansguardian/access.log
 
-squid3 -k shutdown
+/usr/sbin/squid -k shutdown
 dansguardian -q
 killall cron
 /etc/init.d/apache2 stop
