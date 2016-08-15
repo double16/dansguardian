@@ -1,4 +1,4 @@
-dansguardian
+dansguardian [![CircleCI](https://circleci.com/gh/double16/dansguardian.svg?style=svg&circle-token=9482bcf116b2564ced24bda33b0876acbbbb5621)](https://circleci.com/gh/double16/dansguardian)
 ============
 
 Container for DansGuardian, a web content filter.
