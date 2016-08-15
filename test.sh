@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$(dirname $0)/sh2ju.sh"
+
 CONPREFIX=dansguardian_autotest
 COMPOSE="docker-compose -p ${CONPREFIX} -f test.yml"
 
@@ -36,7 +38,7 @@ RESULT=0
 for TEST in $(find tests -maxdepth 1 -type f); do
 	echo -n "${TEST} ... "
 	THISRESULT=0
-	bash ${TEST} >${OUTPUT} 2>&1 || THISRESULT=$?
+        juLog ${TEST} >${OUTPUT} 2>&1 || THISRESULT=$?
         if [ $THISRESULT -eq 0 ]; then
 		echo PASS
 	else
