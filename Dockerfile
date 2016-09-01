@@ -1,14 +1,8 @@
-FROM debian:sid
+FROM blitznote/debootstrap-amd64:16.04
 MAINTAINER Patrick Double <pat@patdouble.com>
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV LANG en_US.UTF-8
-ENV LC_ALL C.UTF-8
-ENV LANGUAGE en_US.UTF-8
-
 RUN rm -rf /var/lib/apt/lists/* && apt-get -q update &&\
-  apt-get -qy --force-yes dist-upgrade &&\
-  apt-get install -qy --force-yes squid dansguardian apache2 sarg wget cron psmisc &&\
+  apt-get install -qy --allow-downgrades squid dansguardian apache2 sarg wget cron psmisc &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* &&\
   rm -rf /tmp/*
