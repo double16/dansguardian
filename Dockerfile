@@ -2,7 +2,7 @@ FROM blitznote/debootstrap-amd64:16.04
 MAINTAINER Patrick Double <pat@patdouble.com>
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get -q update &&\
-  apt-get install -qy --allow-downgrades squid dansguardian apache2 sarg wget cron psmisc &&\
+  apt-get install -qy --allow-downgrades squid dansguardian apache2 sarg wget cron psmisc netcat-openbsd &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* &&\
   rm -rf /tmp/*
@@ -21,12 +21,10 @@ RUN sed -i -e 's/filterport.*/filterport = 3128/' -e 's/proxyport.*/proxyport = 
 RUN sed -i "s/Listen 80/Listen 8125/" /etc/apache2/ports.conf && sed -i "s/:80>/:8125>/" /etc/apache2/sites-enabled/000-default.conf
 RUN ln -s /etc/apache2/mods-available/cgi.load /etc/apache2/mods-enabled/
 
-ADD ./start.sh /start.sh
-RUN chmod u+x  /start.sh
+COPY ./start.sh ./healthcheck.sh /
+RUN chmod u+x /*.sh
 
-VOLUME /blacklists
-VOLUME /cache
-VOLUME /log
+VOLUME [ "/blacklists", "/cache", "/log" ]
 
 # 3128 is the content filtered proxy port
 # 8123 is the caching only proxy port
@@ -35,4 +33,6 @@ VOLUME /log
 EXPOSE 3128 8123 8124 8125
 
 CMD ["/start.sh"]
+
+HEALTHCHECK --interval=200s --timeout=100s CMD /healthcheck.sh || exit 1
 
