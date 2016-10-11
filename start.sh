@@ -14,7 +14,7 @@ echo "ServerName ${SERVERNAME}" >> /etc/apache2/apache2.conf
 mkdir -p /log/squid3
 mkdir -p /log/sarg
 mkdir -p /cache/squid3
-find /log/squid3 /cache/squid3 -not -user proxy -exec chown proxy {} +
+find /log/squid3 /log/sarg /cache/squid3 -not -user proxy -exec chown proxy {} +
 /usr/sbin/squid -z -f /etc/squid/squid.conf
 /usr/sbin/squid -YC -f /etc/squid/squid.conf
 
