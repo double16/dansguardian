@@ -2,7 +2,7 @@ FROM blitznote/debootstrap-amd64:16.04
 MAINTAINER Patrick Double <pat@patdouble.com>
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get -q update &&\
-  apt-get install -qy --allow-downgrades squid dansguardian apache2 sarg wget cron psmisc netcat-openbsd &&\
+  apt-get install -y --allow-downgrades --fix-broken --no-upgrade squid dansguardian apache2 sarg wget cron psmisc netcat-openbsd &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/* &&\
   rm -rf /tmp/*
