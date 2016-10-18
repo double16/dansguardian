@@ -1,0 +1,11 @@
+/log/dansguardian/access.log {
+	weekly
+	compress
+	prerotate
+		/etc/init.d/dansguardian stop > /dev/null 2>&1 || true
+	endscript
+	postrotate
+		/etc/init.d/dansguardian start > /dev/null 2>&1
+	endscript
+}
+
