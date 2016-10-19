@@ -19,6 +19,7 @@ RUN sed -i -e 's/output_dir .*/output_dir \/log\/sarg/' -e 's/access_log .*/acce
 RUN sed -i -e 's/filterport.*/filterport = 3128/' -e 's/proxyport.*/proxyport = 8123/' -e 's/forwardedfor = .*/forwardedfor = on/' -e 's/#loglocation.*/loglocation = \/log\/dansguardian\/access.log/' -e 's/UNCONFIGURED/#UNCONFIGURED/' /etc/dansguardian/dansguardian.conf
 # logrotate
 COPY logrotate.d/* /etc/logrotate.d/
+COPY logrotate.conf /etc/logrotate.conf
 # apache conf
 RUN sed -i "s/Listen 80/Listen 8125/" /etc/apache2/ports.conf && sed -i "s/:80>/:8125>/" /etc/apache2/sites-enabled/000-default.conf
 RUN ln -s /etc/apache2/mods-available/cgi.load /etc/apache2/mods-enabled/

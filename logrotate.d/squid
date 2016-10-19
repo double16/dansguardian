@@ -1,12 +1,15 @@
 /log/squid3/*.log {
-	monthly
+	weekly
+        dateext
+        rotate 5200
 	compress
 	missingok
 	nocreate
 	sharedscripts
-	prerotate
-		test ! -x /usr/sbin/sarg-reports || /usr/sbin/sarg-reports
-	endscript
+# sarg can read rotated logs, no need to invoke it here
+#	prerotate
+#		test ! -x /usr/sbin/sarg-reports || ( /usr/sbin/sarg-reports daily ; /usr/sbin/sarg-reports weekly ; /usr/sbin/sarg-reports monthly )
+#	endscript
 	postrotate
 		test ! -e /var/run/squid.pid || test ! -x /usr/sbin/squid || /usr/sbin/squid -k rotate
 	endscript

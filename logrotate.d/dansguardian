@@ -1,8 +1,10 @@
 /log/dansguardian/access.log {
 	weekly
+        dateext
+        rotate 5200
 	compress
 	prerotate
-		/etc/init.d/dansguardian stop > /dev/null 2>&1 || true
+		while killall dansguardian > /dev/null 2>&1; do sleep 1s; done || true
 	endscript
 	postrotate
 		/etc/init.d/dansguardian start > /dev/null 2>&1
