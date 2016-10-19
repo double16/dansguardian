@@ -8,7 +8,7 @@ RUN rm -rf /var/lib/apt/lists/* && apt-get -q update &&\
   rm -rf /tmp/*
 
 # blacklist update
-COPY blacklist/blacklist-update.sh /
+COPY blacklist-update.sh /
 RUN chmod u+x /blacklist-update.sh && ln -s /blacklist-update.sh /etc/cron.weekly/blacklist-update.sh && /bin/sh -x /blacklist-update.sh && cp /blacklists/banned*list /etc/dansguardian/lists/
 
 # squid config
