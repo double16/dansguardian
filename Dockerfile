@@ -1,6 +1,20 @@
 FROM blitznote/debootstrap-amd64:16.04
 MAINTAINER Patrick Double <pat@patdouble.com>
 
+ARG BUILD_DATE
+ARG SOURCE_COMMIT
+ARG DOCKERFILE_PATH
+ARG SOURCE_TYPE
+
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.docker.dockerfile="$DOCKERFILE_PATH/Dockerfile" \
+      org.label-schema.license="Apache-2.0" \
+      org.label-schema.name="Container for DansGuardian, a web content filter" \
+      org.label-schema.url="https://github.com/double16/dansguardian" \
+      org.label-schema.vcs-ref=$SOURCE_COMMIT \
+      org.label-schema.vcs-type="$SOURCE_TYPE" \
+      org.label-schema.vcs-url="https://github.com/double16/dansguardian.git"
+
 RUN rm -rf /var/lib/apt/lists/* && apt-get -q update &&\
   apt-get install -y --allow-downgrades --fix-broken --no-upgrade squid dansguardian apache2 sarg wget cron psmisc netcat-openbsd &&\
   apt-get clean &&\
