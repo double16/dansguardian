@@ -4,6 +4,8 @@ MAINTAINER Patrick Double <pat@patdouble.com>
 RUN rm -rf /var/lib/apt/lists/* && apt-get -q update &&\
   apt-get install -y --allow-downgrades --fix-broken --no-upgrade squid dansguardian apache2 sarg wget cron psmisc netcat-openbsd &&\
   apt-get clean &&\
+  usermod -aG users dansguardian &&\
+  usermod -aG users proxy &&\
   rm -rf /var/lib/apt/lists/* &&\
   rm -rf /tmp/*
 
