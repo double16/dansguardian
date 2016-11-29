@@ -13,7 +13,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.url="https://github.com/double16/dansguardian" \
       org.label-schema.vcs-ref=$SOURCE_COMMIT \
       org.label-schema.vcs-type="$SOURCE_TYPE" \
-      org.label-schema.vcs-url="https://github.com/double16/dansguardian.git"
+      org.label-schema.vcs-url="https://github.com/double16/dansguardian.git" \
+      org.label-schema.vendor="https://github.com/double16"
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get -q update &&\
   apt-get install -y --allow-downgrades --fix-broken --no-upgrade squid dansguardian apache2 sarg wget cron psmisc netcat-openbsd &&\

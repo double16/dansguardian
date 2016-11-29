@@ -1,6 +1,8 @@
 dansguardian [![CircleCI](https://circleci.com/gh/double16/dansguardian.svg?style=svg&circle-token=9482bcf116b2564ced24bda33b0876acbbbb5621)](https://circleci.com/gh/double16/dansguardian)
 ============
 
+[![](https://images.microbadger.com/badges/image/pdouble16/dansguardian.svg)](http://microbadger.com/images/pdouble16/dansguardian "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/pdouble16/dansguardian.svg)](http://microbadger.com/images/pdouble16/dansguardian "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/commit/pdouble16/dansguardian.svg)](http://microbadger.com/images/pdouble16/dansguardian "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/license/pdouble16/dansguardian.svg)](http://microbadger.com/images/pdouble16/dansguardian "Get your own version badge on microbadger.com")
+
 Container for DansGuardian, a web content filter.
 
 This container is intended to be used as a base image. The configuration is stock from the Ubuntu packages. `/etc/dansguardian/*` needs to be configured for your use case. This container configuration uses all of the blacklists from shallalist.de, which makes it very restrictive. You might try http://www.myip.com for a site that is not blocked.
