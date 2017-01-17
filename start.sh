@@ -15,6 +15,8 @@ mkdir -p /log/squid3
 mkdir -p /log/sarg
 mkdir -p /cache/squid3
 find /log/squid3 /cache/squid3 -not -user proxy -exec chown proxy {} +
+find /log/sarg -maxdepth 1 -not -user proxy -exec chown proxy {} +
+chmod -R g+w /log/squid3 /log/sarg /cache/squid3
 /usr/sbin/squid -z -f /etc/squid/squid.conf
 /usr/sbin/squid -YC -f /etc/squid/squid.conf
 
@@ -22,6 +24,7 @@ mkdir -p /log/dansguardian
 mkdir -p /cache/dansguardian
 find /log/dansguardian /cache/dansguardian -not \( -user dansguardian -a -group dansguardian \) -exec chown dansguardian:dansguardian {} +
 /usr/sbin/dansguardian
+chmod -R g+w /log/dansguardian /cache/dansguardian
 
 /etc/init.d/apache2 start
 

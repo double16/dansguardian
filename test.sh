@@ -9,10 +9,13 @@ export TIMEOUT=15
 export CURL_OPTS="--retry 3 --connect-timeout ${TIMEOUT} -#"
 
 TARGET=
-if [ -n "${DOCKER_HOST}" ]; then
+if [ "${DOCKER_HOST}" == "unix:///var/run/docker.sock" ]; then
+	TARGET="127.0.0.1"
+elif [ -n "${DOCKER_HOST}" ]; then
 	TARGET=$(echo $DOCKER_HOST | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}')
 else
 	TARGET=$(ifconfig docker0 | grep "inet addr" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' | head -n 1)
+        [ -z "${TARGET}" ] && TARGET='127.0.0.1'
 fi
 
 if [ -z "${TARGET}" ]; then
@@ -31,7 +34,12 @@ export PORT_CACHED=$(${COMPOSE} port --protocol=tcp proxy 8123 2>/dev/null | cut
 export PORT_INTERCEPT=$(${COMPOSE} port --protocol=tcp proxy 8124 2>/dev/null | cut -d : -f 2)
 export PORT_ACCESSDENIED=$(${COMPOSE} port --protocol=tcp proxy 8125 2>/dev/null | cut -d : -f 2)
 
-sleep 3s
+CNT=1
+while [ $CNT -lt 5 ]; do
+	nc -z -w ${TIMEOUT} ${TARGET} ${PORT_FILTERED} && CNT=5
+        sleep 3s
+        CNT=$(($CNT + 1))
+done
 
 OUTPUT=$(mktemp -t testoutXXXXXXXXXX)
 RESULT=0
